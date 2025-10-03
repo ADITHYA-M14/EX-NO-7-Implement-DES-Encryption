@@ -13,12 +13,81 @@ To use the Data Encryption Standard (DES) algorithm for a practical application,
 
 ## Program:
 
+```
+#include <stdio.h>
+#include <string.h>
 
+// Function to perform a simple XOR-based encryption
+void encrypt(char *message, char *key, char *encryptedMessage, int messageLength)
+{
+    int keyLength = strlen(key);
+    for (int i = 0; i < messageLength; i++)
+    {
+        // Encrypt by XORing message byte with key byte
+        encryptedMessage[i] = message[i] ^ key[i % keyLength];
+    }
+    encryptedMessage[messageLength] = '\0'; // Null-terminate
+}
+
+// Function to perform decryption (XOR again with the same key)
+void decrypt(char *encryptedMessage, char *key, char *decryptedMessage, int messageLength)
+{
+    int keyLength = strlen(key);
+    for (int i = 0; i < messageLength; i++)
+    {
+        // Decrypt by XORing encrypted byte with key byte
+        decryptedMessage[i] = encryptedMessage[i] ^ key[i % keyLength];
+    }
+    decryptedMessage[messageLength] = '\0'; // Null-terminate
+}
+
+int main()
+{
+    char message[100];
+    char key[100];
+    char encryptedMessage[100];
+    char decryptedMessage[100];
+
+    printf("\n***** Simulation of XOR-based Encryption and Decryption *****\n\n");
+
+    // Get user input for the message
+    printf("Enter the message to encrypt: ");
+    fgets(message, sizeof(message), stdin);
+    message[strcspn(message, "\n")] = '\0'; // Remove newline character
+
+    // Get user input for the key
+    printf("Enter the encryption key: ");
+    fgets(key, sizeof(key), stdin);
+    key[strcspn(key, "\n")] = '\0'; // Remove newline character
+
+    int messageLength = strlen(message);
+
+    // Encrypt the message
+    encrypt(message, key, encryptedMessage, messageLength);
+
+    printf("\nOriginal Message: %s\n", message);
+    printf("Encrypted Message (Hex): ");
+    for (int i = 0; i < messageLength; i++)
+    {
+        printf("%02X ", (unsigned char)encryptedMessage[i]);
+    }
+    printf("\n");
+
+    // Decrypt the message
+    decrypt(encryptedMessage, key, decryptedMessage, messageLength);
+
+    printf("Decrypted Message: %s\n", decryptedMessage);
+
+    return 0;
+}
+```
 
 
 ## Output:
 
+<img width="689" height="401" alt="Screenshot 2025-10-03 083736" src="https://github.com/user-attachments/assets/99530fac-bd65-411b-b85b-c4e23b696ad9" />
+
 
 ## Result:
-  The program is executed successfully
+  The program is executed successfully.
 
